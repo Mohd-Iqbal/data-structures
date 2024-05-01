@@ -99,6 +99,33 @@ class BinarySearchTree:
            max = self.right.max_value()
 
         return max
+    
+    def delete(self,val):
+        if val < self.data:
+            if self.left:
+                self.left = self.left.delete(val)
+        elif val > self.data:
+            if self.right:
+                self.right = self.right.delete(val)
+        else:
+            if self.left is None and self.right is None:
+                return None
+            if self.left is None:
+                return self.right
+            if self.right is None:
+                return self.left
+            
+            # getting value from right side 
+            # value = self.right.min_value()
+            # self.data = value
+            # self.right = self.right.delete(value)
+
+            # getting value from left side 
+            value = self.left.max_value()
+            self.data = value
+            self.left = self.left.delete(value)
+
+        return self
 
 def build_tree(elements):
     print("Building tree with these elements:",elements)
@@ -111,9 +138,10 @@ def build_tree(elements):
 
 numbers = build_tree([3, 7, 2, 8, 10, 5, 1])
 # print(numbers.search(44))
-print(numbers.in_order_traversal())
 # print(numbers.pre_order_transversal())
 # print(numbers.post_order_transversal())
 # print(numbers.calculate_sum())
 # print(numbers.min_value())
 # print(numbers.max_value())
+numbers.delete(7)
+print(numbers.in_order_traversal())
